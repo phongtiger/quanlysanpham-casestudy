@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="ArrSP.js"></script>
+    <script src="Product.js"></script>
+    <link rel="stylesheet" href="button.css">
+</head>
+<h3>Search product</h3>
+<form>
+    <input id="search">
+    <select id="checkSelect">
+        <option value="1">Name</option>
+        <option value="2">Id</option>
+    </select>
+    <button class="button button1" type="button" onclick="Search()">Search</button>
+</form>
+<br/>
+<h3>Add and save change</h3>
+<br>
+<table border="1" >
+    <tr>
+        <td>
+            ID: <input id="id" type="text">
+        </td>
+        <td>
+            Tên SP: <input id="name" type="text">
+        </td>
+        <td>
+            Chi tiết: <input id="detail" type="text">
+        </td>
+        <td>
+            Danh mục: <input id="category" type="text">
+        </td>
+        <td>
+            <button class="button button2" type="button" onclick="addProduct()" style="background-color: cornflowerblue">ADD</button>
+        </td>
+        <td>
+            <button class="button button3" type="button" onclick="realChange()" id="change" style="background-color: lightcoral">CHANGE</button>
+        </td>
+    </tr>
+</table>
+<br/>
+<h3>List product</h3>
+<br/>
+<table border="1">
+    <tr>
+        <th>STT</th>
+        <th>ID</th>
+        <th>Tên sản phẩm</th>
+        <th>Chi tiết</th>
+        <th>Danh mục</th>
+        <th>Thay đổi</th>
+    </tr>
+    <tbody id="list">
+    </tbody>
+</table>
+
+</body>
+
+<script>
+    let manager = new Manage();
+    let product1 = new Product(11,"Samsung","S10","Cảm ứng");
+    let product2 = new Product(12,"nokia","1280","Cơ bản");
+    let product3 = new Product(13,"Iphone","XSMAX","cảm ứng");
+    manager.addProduct(product1);
+    manager.addProduct(product2);
+    manager.addProduct(product3);
+    manager.showProducts("list",manager.getProducts());
+
+    function addProduct() {
+        let id = document.getElementById("id").value;
+        let name = document.getElementById("name").value;
+        let detail = document.getElementById("detail").value;
+        let category = document.getElementById("category").value;
+        let product = new Product(id,name,detail,category);
+        manager.addProduct(product);
+        manager.showProducts("list",manager.getProducts());
+        reset();
+    }
+
+    function reset() {
+        document.getElementById("id").value = '';
+        document.getElementById("name").value = '';
+        document.getElementById("detail").value='';
+        document.getElementById("category").value='';
+    }
+
+    function deleteSp(i) {
+        manager.deleteId(i);
+        manager.showProducts("list",manager.getProducts());
+        console.log(manager.getProducts().length);
+        checkQuantity()
+    }
+
+    function changeSp(i) {
+        manager.moveUp(i);
+        document.getElementById('change').value = i;
+    }
+
+    function realChange(){
+        manager.Change();
+        manager.showProducts("list",manager.getProducts());
+        reset()
+
+    }
+    function checkQuantity() {
+        if(manager.getProducts().length < 1){
+            document.getElementById("list").innerHTML ="<td>"+"Không còn sản phẩm nào cả"+"</td>";
+        }
+    }
+    function Search() {
+        let resultSearch = [];
+        let count = 0;
+        let search = document.getElementById("search").value;
+        let searchType = document.getElementById("checkSelect").value;
+        for(let i =0; i<manager.getProducts().length;i++){
+            let a = manager.getProducts()[i];
+            if(searchType == 1){
+                if(a.getname().toLowerCase()==search.toLowerCase()){
+                    resultSearch.push(a);
+                    count++;
+                }
+            }else {
+                if(a.getid()==search){
+                    resultSearch.push(a);
+                    count++;
+                }
+            }
+        }
+        if(count>0){
+            manager.showProducts("list",resultSearch);
+        } else {
+            document.getElementById("list").innerHTML = "<td>"+"Không tìm thấy sản phẩm"+"</td>"
+        }
+
+
+
+    }
+</script>
+</html>
