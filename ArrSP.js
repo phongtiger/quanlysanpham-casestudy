@@ -9,12 +9,14 @@ let Manage = function (name) {
     this.deleteId = function (id) {
         this.products.splice(id,1);
     };
+
     this.moveUp = function (i) {
         document.getElementById("id").value = this.products[i].getid();
         document.getElementById("name").value = this.products[i].getname();
         document.getElementById("detail").value = this.products[i].getdetail() ;
         document.getElementById("category").value = this.products[i].getcategory() ;
     };
+
     this.Change= function(){
         let i = document.getElementById("change").value;
         let id = document.getElementById("id").value;
@@ -26,6 +28,7 @@ let Manage = function (name) {
         this.products[i].setdetail(detail);
         this.products[i].setcategory(category);
     };
+
     this.getListProducts = function (arrProduct) {
         let list = "";
         for (let i = 0; i < arrProduct.length;i++){
@@ -40,6 +43,7 @@ let Manage = function (name) {
         }
         return list;
     };
+
     this.showProducts = function (idList, arrProduct) {
         document.getElementById(idList).innerHTML = this.getListProducts(arrProduct);
     }

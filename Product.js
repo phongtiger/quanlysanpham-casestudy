@@ -3,7 +3,6 @@ let Product = function (id, name, detail, category) {
     this.name = name;
     this.detail = detail;
     this.category = category;
-
     this.getid = function() {
         return this.id;
     };
@@ -21,16 +20,11 @@ let Product = function (id, name, detail, category) {
     };
     this.setname = function(name){
         this.name = name;
-
     };
     this.setdetail = function (detail){
         this.detail = detail;
-
     };
     this.setcategory = function (category){
         this.category = category;
-
     };
-
-
 };

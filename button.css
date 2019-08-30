@@ -32,3 +32,6 @@ th {
     background-color: #4CAF50;
     color: white;
 }
+#checkSelect{
+    height:24px!important;
+}
